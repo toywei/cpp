@@ -43,7 +43,6 @@ int main(){
     int *left=NULL,*right=NULL;
     left=&the_list[0];
     right = &the_list[0] + len_of_the_list-1;
-    cout<<right-left<<endl;
     quicksort(left,right);
 
 

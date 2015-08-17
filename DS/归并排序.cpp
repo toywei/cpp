@@ -1,15 +1,17 @@
 #include <iostream>
 using namespace std;
+
 //合并小函数
+int *merge(int *start,int *mid,int *end){
 
+    int *save=start; //返回内存起始地址所需
+    int *a=start;  //复制时用的指针
 
-int merge(int *start,int *mid,int *end){
-    int offset=end-start;
-    int *a=start;
     int *b=mid+1; //mid 需要+1
-    int* temp=new int[end-start+1];
-    int *i=temp;    //
-    int *j=temp;    // temp 是删除用的指针 i，j 分别是复制 和写回时候用的指针
+    int *temp=new int[end-start+1];
+    int *i=temp;    //复制时用的指针
+    int *j=temp;    //写回的指针
+
     while (a <= mid && b <= end){
         (*a<=*b)?*i++=*a++:*i++=*b++;
     }
@@ -21,20 +23,32 @@ int merge(int *start,int *mid,int *end){
         *i++=*b++;
     }
     //写回原来的内存
-    while(start<end){
+    while(start<=end){
+        //cout<<"w"<<*j<<';';
         *start++=*j++;
     }
     delete[] temp;
-    return 0;
+    return save;
+
+}
+
+int* merge_sort(int *start,int *end){
+    if (start-end==0){
+        return start;
+    }
+    int *mid=start+(end-start)/2;
+    int *left=merge_sort(start,mid);
+    int *right=merge_sort(mid+1,end);
+    return merge(start,mid,end);
 
 }
 
 void test_merge(){
-    int list[]={1,5,8,11,14,2,4,9,12,15};
+    int list[]={11,5,1,166,14,5,235,453,96,1264,145,99999999};
     int *start=&list[0];
     int *mid=&list[4];
     int *end=&list[sizeof(list)/sizeof(int)-1];
-    merge(start,mid,end);
+    merge_sort(start,end);
     for (int t=0;t<end-start+1;t++){
         cout<<list[t]<<endl;
     }

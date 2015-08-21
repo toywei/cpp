@@ -3,7 +3,7 @@
 #include <ctime>
 #include <cmath>
 
-#define NANO_SECOND_MULTIPLIER  1000000
+#define NANO_SECOND_MULTIPLIER  1000000L
 
 struct test{
     int a;
